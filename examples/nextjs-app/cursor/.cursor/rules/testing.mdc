@@ -1,0 +1,28 @@
+---
+description: Testing conventions for Vitest and React Testing Library -- the agent pulls this in when writing or modifying tests
+globs: []
+alwaysApply: false
+---
+
+# Testing Rules (agent-requested)
+
+No globs, no alwaysApply. The AI reads this file's DESCRIPTION and decides to pull it in when the task involves writing or modifying tests -- even if you're not viewing a test file.
+
+Example: you say "add tests for the UserCard component" while viewing UserCard.tsx. The agent sees the description mentions "testing conventions" and loads this file automatically.
+
+## Stack
+
+- Vitest + React Testing Library + @testing-library/user-event
+
+## Patterns
+
+- Test behavior, not implementation. Query by role, text, or label.
+- Use `screen.getByRole()` over `screen.getByTestId()`.
+- Use `userEvent` for interactions, not `fireEvent`.
+- Mock Server Actions and API calls. Never hit real endpoints.
+- Use factory functions for test data, not inline object literals.
+
+## File Location
+
+- Co-locate: `Button.test.tsx` next to `Button.tsx`.
+- Integration tests in `__tests__/` at the feature root.

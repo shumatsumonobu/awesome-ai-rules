@@ -1,0 +1,32 @@
+---
+description: React and Next.js component conventions
+globs:
+  - "packages/web/**/*.tsx"
+  - "packages/web/**/*.jsx"
+alwaysApply: false
+---
+
+# React Rules (auto-attached to .tsx/.jsx in packages/web/)
+
+These rules ONLY activate when you're editing React files in the web package. The AI won't see them when editing database code, config files, or anything outside packages/web/*.tsx.
+
+This prevents React-specific advice from leaking into non-React code.
+
+## Components
+
+- Server Components by default. `"use client"` only at the smallest leaf that needs hooks/events/browser APIs.
+- Define props as `type ButtonProps = { ... }` in the same file.
+- Use `cn()` (clsx + tailwind-merge) for conditional Tailwind classes.
+- Use `forwardRef` for components wrapping native elements.
+
+## Data Flow
+
+- Fetch data in Server Components with `async/await`.
+- Use Server Actions for mutations. `useActionState` for form state, `useOptimistic` for instant feedback.
+- Never use `useEffect` for data fetching.
+
+## Routing
+
+- Use `loading.tsx` for streaming, `error.tsx` for error boundaries with retry.
+- Use route groups `(groupName)` for layout organization.
+- Route handlers (`app/api/`) are for webhooks only.

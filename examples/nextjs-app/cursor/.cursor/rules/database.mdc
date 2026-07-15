@@ -1,0 +1,34 @@
+---
+description: Drizzle ORM and database conventions for the API package
+globs:
+  - "packages/api/**/*.ts"
+alwaysApply: false
+---
+
+# Database Rules (auto-attached to packages/api/)
+
+Auto-attached when editing any .ts file under packages/api/. This means database rules never contaminate frontend code -- if you're editing a React component, this file isn't loaded.
+
+## Drizzle Conventions
+
+- Define tables in `src/schema/`, one file per table.
+- Use `drizzle-kit` for migrations. Never write migration SQL by hand.
+- Use the query builder. Raw SQL only for performance-critical paths with a justifying comment.
+
+## Patterns
+
+```typescript
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+```
+
+- Services return plain objects, never Drizzle row types.
+- Wrap multi-table writes in transactions.
+- Add indexes for columns used in WHERE and JOIN.
+
+## Boundary
+
+The web package never imports `drizzle-orm`. All DB access goes through this package's service layer.

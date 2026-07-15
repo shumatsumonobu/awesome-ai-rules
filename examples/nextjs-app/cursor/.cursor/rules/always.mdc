@@ -1,0 +1,13 @@
+---
+description: Global project conventions applied to every request
+alwaysApply: true
+---
+
+# Always-On Rules
+
+This file loads on EVERY request, regardless of what file you're editing. Keep it minimal -- only rules that apply everywhere.
+
+- TypeScript strict mode. No `any`, no `@ts-ignore`, no `enum` (use `as const`).
+- Named exports only. No default exports.
+- Run `pnpm typecheck && pnpm lint` before committing.
+- One logical change per commit.
